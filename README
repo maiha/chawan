@@ -1,0 +1,67 @@
+chawan
+======
+
+  A cup for chasen that provides an easy to use for extracting Japanese
+
+
+Methods
+=======
+
+  * Chawan.parse(text)
+    parse the given text by analyzer, where default analyzer is :mecab
+
+  * Chawan.analyzer(xxx)      (same as Chawan[xxx], Chawan.xxx)
+    specify analyzer
+
+
+Class
+=====
+
+  * Chawan::Node (Chawan.parse returns an array of Chawan::Node)
+      #category   : part of speech
+      #word       : text
+      #attributes : keys and vals hash
+
+
+Example
+=======
+
+  Chawan[:mecab].parse('test')
+  => [<名詞: 'test'>]
+
+  # same as
+  #   Chawan.mecab.parse('test')
+  #   Chawan.analyzer(:mecab).parse('test')
+  #   Chawan.parse('test')  # default analyzer is :mecab
+
+  Chawan[:chasen].parse('test')
+  # ChasenAnalyzer is not implemented yet
+
+
+  Chawan.parse('本日は晴天なり')
+  => [<名詞: '本日'>, <助詞: 'は'>, <名詞: '晴天'>, <助動詞: 'なり'>]
+
+  Chawan.parse('本日は晴天なり').select{|node| node.category == '名詞'}.join
+  => "本日晴天"
+
+
+Required
+========
+
+  * UTF-8
+  * 'mecab' unix command (and its path)
+
+
+Todo
+====
+
+  * implement ChasenAnalyzer
+  * gateway interface to Chawan#parse such as grep, noun, ...
+  * use open3 rather than backquote for executing unix commands
+
+
+Author
+======
+
+  maiha@wota.jp
+
