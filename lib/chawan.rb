@@ -7,6 +7,7 @@ end
 
 
 require File.dirname(__FILE__) + '/chawan/node'
+require File.dirname(__FILE__) + '/chawan/nodes'
 require File.dirname(__FILE__) + '/chawan/commands'
 require File.dirname(__FILE__) + '/chawan/analyzers'
 

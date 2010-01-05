@@ -3,6 +3,7 @@ require 'spec'
 require 'rr'
 
 require File.join(File.dirname(__FILE__), '/../lib/chawan')
+require File.join(File.dirname(__FILE__), '/provide_helper')
 
 def data(key)
   path = File.join(File.dirname(__FILE__) + "/fixtures/#{key}")

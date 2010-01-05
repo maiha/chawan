@@ -10,7 +10,8 @@ module Chawan
         lines = execute(text).split(/\n/)
         lines.pop == "EOS" or              # "EOS"
           raise CannotAnalyze
-        return lines.map{|line| instantiate(line, self.class::Fields)}
+        nodes = lines.map{|line| instantiate(line, self.class::Fields)}
+        return Nodes.new(nodes)
       end
 
       private

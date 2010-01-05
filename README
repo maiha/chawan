@@ -17,7 +17,13 @@ Methods
 Class
 =====
 
-  * Chawan::Node (Chawan.parse returns an array of Chawan::Node)
+  * Chawan::Nodes (Chawan.parse returns a Chawan::Nodes)
+      #noun    : scope category with noun
+      #verb    : scope category with verb
+      #grep    : scope category with given pattern
+      #compact : mix the category-consecutive nodes
+
+  * Chawan::Node (Chawan::Nodes has many Chawan::Node(s))
       #category   : part of speech
       #word       : text
       #attributes : keys and vals hash
@@ -26,11 +32,45 @@ Class
 Example
 =======
 
-  Chawan.parse('本日は晴天なり')
-  => [<名詞: '本日'>, <助詞: 'は'>, <名詞: '晴天'>, <助動詞: 'なり'>]
+  text = '本日はバリ晴天なりっす'
 
-  Chawan.parse('本日は晴天なり').select{|node| node.category == '名詞'}.join
-  => "本日晴天"
+  # 'parse' returns a Chawan::Nodes
+  Chawan.parse(text)
+  => [<名詞: '本日'>, <助詞: 'は'>, <名詞: 'バリ'>, <名詞: '晴天'>, <助動詞: 'なり'>, <助動詞: 'っす'>]
+
+  # Chawan::Nodes is enumerable
+  Chawan.parse(text).select{|node| node.category == '名詞'}
+  => [<名詞: '本日'>, <名詞: 'バリ'>, <名詞: '晴天'>]
+
+  # gateway interface: noun
+  Chawan.parse(text).noun
+  => [<名詞: '本日'>, <名詞: 'バリ'>, <名詞: '晴天'>]
+
+  # gateway interface: verb
+  Chawan.parse(text).verb
+  => [<助動詞: 'なり'>, <助動詞: 'っす'>]
+
+  # gateway interface: grep
+  Chawan.parse(text).grep(/助/)
+  => [<助詞: 'は'>, <助動詞: 'なり'>, <助動詞: 'っす'>]
+
+  # gateway interface: compact
+  Chawan.parse(text).compact
+  => [<名詞: '本日'>, <助詞: 'は'>, <名詞: 'バリ晴天'>, <助動詞: 'なりっす'>]
+  Chawan.parse(text).compact(/名詞/)
+  => [<名詞: '本日'>, <助詞: 'は'>, <名詞: 'バリ晴天'>, <助動詞: 'なり'>, <助動詞: 'っす'>]
+
+  # gateway interface is chainable
+  Chawan.parse(text).noun.verb
+  => []
+
+  # chainable is fun!
+  Chawan.parse(text).noun
+  => [<名詞: '本日'>, <名詞: 'バリ'>, <名詞: '晴天'>]
+  Chawan.parse(text).compact.noun
+  => [<名詞: '本日'>, <名詞: 'バリ晴天'>]
+  Chawan.parse(text).noun.compact
+  => [<名詞: '本日バリ晴天'>]
 
   
 Analyzer
@@ -64,7 +104,6 @@ Required
 Todo
 ====
 
-  * gateway interface to Chawan#parse such as grep, noun, ...
   * use open3 rather than backquote for executing unix commands
 
 

@@ -10,4 +10,6 @@ describe Chawan::Node do
   its('word')       {should == "Ruby"}
   its('category')   {should == "名詞"}
   its('inspect')    {should == "<名詞: 'Ruby'>"}
+
+  provide :vals=
 end

@@ -1,7 +1,19 @@
 module Chawan
   class Node
-    attr_reader :vals
+    attr_accessor :vals
     attr_reader :keys
+
+    module GatewayInterface
+      def noun?
+        category.to_s =~ /名詞/
+      end
+
+      def verb?
+        category.to_s =~ /動詞/
+      end
+    end
+
+    include GatewayInterface
 
     def initialize(vals, keys)
       @vals = vals
