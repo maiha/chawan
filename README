@@ -26,6 +26,22 @@ Class
 Example
 =======
 
+  Chawan.parse('本日は晴天なり')
+  => [<名詞: '本日'>, <助詞: 'は'>, <名詞: '晴天'>, <助動詞: 'なり'>]
+
+  Chawan.parse('本日は晴天なり').select{|node| node.category == '名詞'}.join
+  => "本日晴天"
+
+  
+Analyzer
+========
+
+  Parser engine is defined as 'analyzer'.
+  Available analyzers are:
+
+    * mecab : (default)
+    * chasen
+    
   Chawan[:mecab].parse('test')
   => [<名詞: 'test'>]
 
@@ -35,14 +51,7 @@ Example
   #   Chawan.parse('test')  # default analyzer is :mecab
 
   Chawan[:chasen].parse('test')
-  # ChasenAnalyzer is not implemented yet
-
-
-  Chawan.parse('本日は晴天なり')
-  => [<名詞: '本日'>, <助詞: 'は'>, <名詞: '晴天'>, <助動詞: 'なり'>]
-
-  Chawan.parse('本日は晴天なり').select{|node| node.category == '名詞'}.join
-  => "本日晴天"
+  => [<記号: 't'>, <記号: 'e'>, <記号: 's'>, <記号: 't'>]
 
 
 Required
@@ -55,7 +64,6 @@ Required
 Todo
 ====
 
-  * implement ChasenAnalyzer
   * gateway interface to Chawan#parse such as grep, noun, ...
   * use open3 rather than backquote for executing unix commands
 
