@@ -32,33 +32,35 @@ Class
 Example
 =======
 
-  text = '本日はバリ晴天なりっす'
+  text = '登録された利用者'
 
   # 'parse' returns a Chawan::Nodes
   Chawan.parse(text)
-  => [<名詞: '本日'>, <助詞: 'は'>, <名詞: 'バリ'>, <名詞: '晴天'>, <助動詞: 'なり'>, <助動詞: 'っす'>]
+  => [<名詞: '登録'>, <動詞: 'さ'>, <動詞: 'れ'>, <助動詞: 'た'>, <名詞: '利用'>, <名詞: '者'>]
 
   # Chawan::Nodes is enumerable
   Chawan.parse(text).select{|node| node.category == '名詞'}
-  => [<名詞: '本日'>, <名詞: 'バリ'>, <名詞: '晴天'>]
+  => [<名詞: '登録'>, <名詞: '利用'>, <名詞: '者'>]
 
   # gateway interface: noun
   Chawan.parse(text).noun
-  => [<名詞: '本日'>, <名詞: 'バリ'>, <名詞: '晴天'>]
+  => [<名詞: '登録'>, <名詞: '利用'>, <名詞: '者'>]
 
   # gateway interface: verb
   Chawan.parse(text).verb
-  => [<助動詞: 'なり'>, <助動詞: 'っす'>]
+  => [<動詞: 'さ'>, <動詞: 'れ'>, <助動詞: 'た'>]
 
   # gateway interface: grep
-  Chawan.parse(text).grep(/助/)
-  => [<助詞: 'は'>, <助動詞: 'なり'>, <助動詞: 'っす'>]
+  Chawan.parse(text).grep(/動詞/)
+  => [<動詞: 'さ'>, <動詞: 'れ'>, <助動詞: 'た'>]
+  Chawan.parse(text).grep('動詞')
+  => [<動詞: 'さ'>, <動詞: 'れ'>]
 
   # gateway interface: compact
   Chawan.parse(text).compact
-  => [<名詞: '本日'>, <助詞: 'は'>, <名詞: 'バリ晴天'>, <助動詞: 'なりっす'>]
-  Chawan.parse(text).compact(/名詞/)
-  => [<名詞: '本日'>, <助詞: 'は'>, <名詞: 'バリ晴天'>, <助動詞: 'なり'>, <助動詞: 'っす'>]
+  => [<名詞: '登録'>, <動詞: 'され'>, <助動詞: 'た'>, <名詞: '利用者'>]
+  Chawan.parse(text).compact(/動詞/)
+  => [<名詞: '登録'>, <動詞: 'された'>, <名詞: '利用'>, <名詞: '者'>]
 
   # gateway interface is chainable
   Chawan.parse(text).noun.verb
@@ -66,11 +68,11 @@ Example
 
   # chainable is fun!
   Chawan.parse(text).noun
-  => [<名詞: '本日'>, <名詞: 'バリ'>, <名詞: '晴天'>]
+  => [<名詞: '登録'>, <名詞: '利用'>, <名詞: '者'>]
   Chawan.parse(text).compact.noun
-  => [<名詞: '本日'>, <名詞: 'バリ晴天'>]
+  => [<名詞: '登録'>, <名詞: '利用者'>]
   Chawan.parse(text).noun.compact
-  => [<名詞: '本日バリ晴天'>]
+  => [<名詞: '登録利用者'>]
 
   
 Analyzer

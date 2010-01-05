@@ -34,11 +34,12 @@ module Chawan
       end
     end
 
-    def compact(pattern = //)
+    def compact(pattern = nil)
       array = []
-      prev = nil
       each do |node|
-        if array.last and (pattern === node.category) and array.last.category == node.category
+        if array.last and (pattern ?
+                           (pattern === node.category && pattern === array.last.category) :
+                           (array.last.category == node.category))
           array.last.word << node.word.to_s
         else
           array << Node.new(node.vals.map(&:dup), node.keys)

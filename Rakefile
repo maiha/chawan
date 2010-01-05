@@ -6,7 +6,7 @@ AUTHOR = "maiha"
 EMAIL = "maiha@wota.jp"
 HOMEPAGE = "http://github.com/maiha/chawan"
 SUMMARY = "A cup for chasen that provides an easy to use for extracting Japanese"
-GEM_VERSION = "0.0.3"
+GEM_VERSION = "0.0.4"
 
 spec = Gem::Specification.new do |s|
   s.rubyforge_project = 'asakusarb'
